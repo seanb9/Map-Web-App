@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', function () {
     // Set your Google Maps API key here
-    const apiKey = 'AIzaSyDbKwgewOnR24Vd-5nzPUB67WkNm8PIkoc';
+    const apiKey = 'API_Key';
     const placesService = new google.maps.places.PlacesService(document.createElement('div'));
 
     // Function to get top 5 restaurants near the destination
