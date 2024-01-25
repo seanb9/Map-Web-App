@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', function () {
     // Set your Google Maps API key here
-    const apiKey = 'AIzaSyDbKwgewOnR24Vd-5nzPUB67WkNm8PIkoc';
+    const apiKey = 'API_Key';
     const directionsService = new google.maps.DirectionsService();
     const directionsRenderer = new google.maps.DirectionsRenderer();
 
