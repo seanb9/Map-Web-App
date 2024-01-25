@@ -1,7 +1,7 @@
 <?php
 // Get the API key from a secure location (not directly in the code)
 function getApiKey() {
-    return 'AIzaSyDbKwgewOnR24Vd-5nzPUB67WkNm8PIkoc';
+    return 'API_Key';
 }
 
 // Set the CORS header
