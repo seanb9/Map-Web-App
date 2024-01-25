@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Destination Information</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- Add this button to your HTML -->
+  <button class="toggle-theme-btn" onclick="toggleDarkTheme()">Toggle Theme</button>
+
+  <div class="container">
+    <header>
+      <h1>Destination Information</h1>
+    </header>
+    
+    <section class="info-section">
+      <h2 id="destinationName">Top 5 Restaurants Near Destination</h2>
+      <ul id="restaurantList"></ul>
+    </section>
+
+    <a href="index.html" id="goBackBtn" class="back-button">Go Back</a>
+  </div>
+
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDbKwgewOnR24Vd-5nzPUB67WkNm8PIkoc&libraries=places&v=weekly"></script>
+  <script src="destination-info.js"></script>
+</body>
+</html>

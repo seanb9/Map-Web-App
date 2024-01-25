@@ -1,93 +1,83 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Simple Map with Search</title>
-    <style>
-        #map {
-            height: 400px;
-            width: 100%;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Professional Map App</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <h1>Map Search</h1>
-    <input type="text" id="search-input" placeholder="Search for a location">
-    <div id="map"></div>
+  <!-- Add this button to your HTML -->
+  <button class="toggle-theme-btn" onclick="toggleDarkTheme()">Toggle Theme</button>
 
-    <!-- Load the Google Maps JavaScript API -->
-    <script src="https://maps.googleapis.com/maps/api/js?key=GoogleAPiKey&libraries=places&callback=initMap" async defer></script>
+  <div class="container">
+    <header>
+      <h1>Professional Map App</h1>
+    </header>
+    <section class="form-section">
+      <div class="form-group">
+        <label for="currentLocation">Current Location:</label>
+        <input type="text" id="currentLocation" placeholder="Enter current location">
+        <button class="location-btn" onclick="useCurrentLocation('currentLocation')">Use Current Location</button>
+      </div>
 
-    <!-- Your custom JavaScript code -->
-    <script>
-        // Initialize the map
-        function initMap() {
-            const map = new google.maps.Map(document.getElementById('map'), {
-                center: { lat: 37.7749, lng: -122.4194 }, // Default to San Francisco
-                zoom: 12
-            });
+      <div class="form-group">
+        <label for="destination">Destination:</label>
+        <input type="text" id="destination" placeholder="Enter destination">
+        <button class="location-btn" onclick="useCurrentLocation('destination')">Use Current Location</button>
+      </div>
 
-            // Create the search box and link it to the UI element.
-            const input = document.getElementById('search-input');
-            const searchBox = new google.maps.places.SearchBox(input);
+      <div class="form-group">
+        <label for="mode">Mode of Transport:</label>
+        <select id="mode">
+          <option value="DRIVING">Driving</option>
+          <option value="WALKING">Walking</option>
+          <option value="BICYCLING">Bicycling</option>
+          <option value="TRANSIT">Transit (Train/Bus)</option>
+        </select>
+      </div>
 
-            // Bias the SearchBox results towards current map's viewport.
-            map.addListener('bounds_changed', function () {
-                searchBox.setBounds(map.getBounds());
-            });
+      <button class="find-route-btn" onclick="findRoute()">Find Route</button>
+      <button class="view-info-btn" onclick="viewDestinationInfo()">View Destination Info</button>
+      <button class="clear-map-btn" onclick="clearMap()">Clear Map</button>
+      
+      <!-- New button to go to directions page -->
+      <button class="go-to-directions-btn" onclick="goToDirectionsPage()">Go to Directions</button>
+    </section>
 
-            let markers = [];
+    <section class="map-section">
+      <div id="map"></div>
+      <div class="directions-section">
+        <h2>Trip Information</h2>
+        <p id="duration"></p>
+      </div>
+    </section>
+  </div>
 
-            // Listen for the event fired when the user selects a prediction and retrieve
-            // more details for that place.
-            searchBox.addListener('places_changed', function () {
-                const places = searchBox.getPlaces();
+  <script>
+    // Ensure that the initMap function is available globally
+    window.initMap = function() {
+      // You may want to call your script.js logic here if needed
+    };
+    
+    // Function to navigate to the directions page
+    function goToDirectionsPage() {
+      const currentLocation = document.getElementById("currentLocation").value;
+      const destination = document.getElementById("destination").value;
+      const mode = document.getElementById("mode").value;
 
-                if (places.length === 0) {
-                    return;
-                }
-
-                // Clear out the old markers.
-                markers.forEach(function (marker) {
-                    marker.setMap(null);
-                });
-                markers = [];
-
-                // For each place, get the icon, name and location.
-                const bounds = new google.maps.LatLngBounds();
-                places.forEach(function (place) {
-                    if (!place.geometry) {
-                        console.log('Returned place contains no geometry');
-                        return;
-                    }
-
-                    const icon = {
-                        url: place.icon,
-                        size: new google.maps.Size(71, 71),
-                        origin: new google.maps.Point(0, 0),
-                        anchor: new google.maps.Point(17, 34),
-                        scaledSize: new google.maps.Size(25, 25)
-                    };
-
-                    // Create a marker for each place.
-                    markers.push(new google.maps.Marker({
-                        map: map,
-                        icon: icon,
-                        title: place.name,
-                        position: place.geometry.location
-                    }));
-
-                    if (place.geometry.viewport) {
-                        // Only geocodes have viewport.
-                        bounds.union(place.geometry.viewport);
-                    } else {
-                        bounds.extend(place.geometry.location);
-                    }
-                });
-                map.fitBounds(bounds);
-            });
-        }
-    </script>
+      if (currentLocation && destination && mode) {
+          const url = `directions.html?currentLocation=${encodeURIComponent(currentLocation)}&destination=${encodeURIComponent(destination)}&mode=${encodeURIComponent(mode)}`;
+          window.location.href = url;
+      } else {
+          alert("Please enter current location, destination, and mode before navigating to directions.");
+      }
+    }
+  </script>
+  <script async defer
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDbKwgewOnR24Vd-5nzPUB67WkNm8PIkoc&callback=initMap&libraries=places&v=weekly"
+      onload="initMap()"
+  ></script>
+  <script src="script.js"></script>
 </body>
 </html>
